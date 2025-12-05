@@ -1,4 +1,5 @@
 import { NextFunction, Request, Response } from "express";
+import { AppError } from "../utils/errors/app.error";
 
 /**
  * @description: Generic error handler middleware
@@ -7,9 +8,10 @@ import { NextFunction, Request, Response } from "express";
  * @param next
  */
 export const genericErrorHandler = (
+  err: AppError,
   req: Request,
   res: Response,
   next: NextFunction
 ) => {
-  res.status(500).send({ message: "Something went wrong!" });
+  res.status(err.statusCode).send({ message: err.message });
 };
